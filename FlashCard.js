@@ -36,7 +36,7 @@ inquirer
     // text prompt
     {
       type: "input",
-      message: "Entee text for the front of the card:",
+      message: "Enter text for the front of the card:",
       name: "front"
     },
     {
@@ -62,7 +62,7 @@ inquirer
 
 //user enter text for cloze card
 function enterClozeCard(){
-    inquirer
+inquirer
   .prompt([
     // text prompt
      {
@@ -75,10 +75,10 @@ function enterClozeCard(){
       message: "Enter cloze to be deleted:",
       name: "cloze_text"
     },
-   {
+    {
       type: "input",
-      message: "Enter partial text:",
-      name: "partial_text"
+      message: "Enter partial cloze:",
+     name: "partial_text"
     }
   ])
   .then(function(answers, err) {
@@ -86,26 +86,26 @@ function enterClozeCard(){
     if (err) {
       console.log("error");
     } 
+    //if cloze is not in full text
     else if (answers.full_text.includes(answers.cloze_text) === false)
     {
       console.log("oops! This doesn't work.");
     }
     else {
       //test captured values
-      console.log(answers.full_text + "----" + answers.cloze_text + "----" + answers.partial_text);
+      // console.log(answers.full_text + "----" + answers.cloze_text + "------" + answers.partial_text);
+
       //create new ClozeCard object
-      var CC1 = new ClozeCard(answers.full_text, "");
-      //assign input to object keys
-      CC1.cloze.cloze = answers.cloze_text;
-      CC1.cloze.fullText = answers.full_text;
-      CC1.cloze.partial = answers.partial_text;
+      var CC1 = new ClozeCard(answers.full_text,"");
+      //add input to cloze
+      CC1.addClozeCard(answers.cloze_text, answers.partial_text, answers.full_text);
 
       //test CC1 captured object values
-      console.log(CC1);
+      // console.log(CC1);
 
-      console.log("Full text: " + CC1.cloze.fullText);
-      console.log("Cloze text: " + CC1.cloze.cloze);
-      console.log("Partial text: " + CC1.cloze.partial);
+      console.log("Cloze text: " + CC1.cloze[0].cloze);
+      console.log("Partial text: " + CC1.cloze[0].partial);
+      console.log("Full text: " + CC1.cloze[0].fullText);
 
       console.log("------------------------------------------");
     }
